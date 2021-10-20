@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="'Hello, ' + ${name} + '!'"></p>
+<tr th:each="pizza : ${pizzas}">
+    <td><span th:text="${pizza.pizzaName}" ></span>></td>
+</tr>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.pizza_market.db.entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
