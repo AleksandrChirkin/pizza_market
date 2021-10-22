@@ -1,9 +1,9 @@
 package com.pizza_market.db.utils;
 
-import com.pizza_market.db.entities.Client;
+//import com.pizza_market.db.entities.Client;
 import com.pizza_market.db.entities.Ingredient;
 import com.pizza_market.db.entities.Pizza;
-import com.pizza_market.db.entities.PizzaOrder;
+//import com.pizza_market.db.entities.PizzaOrder;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -17,10 +17,10 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
-                configuration.addAnnotatedClass(Client.class);
+                //configuration.addAnnotatedClass(Client.class);
                 configuration.addAnnotatedClass(Ingredient.class);
                 configuration.addAnnotatedClass(Pizza.class);
-                configuration.addAnnotatedClass(PizzaOrder.class);
+                //configuration.addAnnotatedClass(PizzaOrder.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 

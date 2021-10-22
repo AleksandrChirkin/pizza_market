@@ -7,6 +7,7 @@ import java.sql.Date;
 @Table(name="PIZZA_ORDER")
 public class PizzaOrder {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "order_date", nullable = false)

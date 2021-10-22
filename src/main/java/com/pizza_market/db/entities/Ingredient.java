@@ -7,6 +7,7 @@ import java.util.Set;
 @Table(name="INGREDIENT")
 public class Ingredient {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany(mappedBy = "ingredients")

@@ -7,7 +7,8 @@ import java.util.Set;
 @Table(name="PIZZA")
 public class Pizza {
     @Id
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToMany
     private Set<Ingredient> ingredients;
@@ -17,4 +18,12 @@ public class Pizza {
 
     @Column
     private String description;
+
+    public String getPizzaName() {
+        return pizzaName;
+    }
+
+    public void setPizzaName(String pizzaName){
+        this.pizzaName = pizzaName;
+    }
 }
