@@ -6,7 +6,8 @@
 </head>
 <body>
 <tr th:each="pizza : ${pizzas}">
-    <td><span th:text="${pizza.pizzaName}" ></span>></td>
+    <td><span th:text="${pizza.pizzaName}" ></span> </td>
+    <td><span th:text="${pizza.description}" ></span><br></td>
 </tr>
 </body>
 </html>

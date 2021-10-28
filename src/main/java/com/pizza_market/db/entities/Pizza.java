@@ -26,4 +26,12 @@ public class Pizza {
     public void setPizzaName(String pizzaName){
         this.pizzaName = pizzaName;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
