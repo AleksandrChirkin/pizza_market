@@ -4,11 +4,6 @@
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.pizza_market.PizzaMarketApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="SHORTEN_COMMAND_LINE" value="NONE" />
-    <envs>
-      <env name="POSTGRESQL_USERNAME" value="mark" />
-      <env name="POSTGRESQL_PASSWD" value="2002" />
-      <env name="a" value="b" />
-    </envs>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

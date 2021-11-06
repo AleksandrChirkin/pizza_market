@@ -5,6 +5,8 @@ import com.pizza_market.db.entities.Ingredient;
 import com.pizza_market.db.entities.Pizza;
 import com.pizza_market.db.entities.PizzaOrder;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.BootstrapServiceRegistry;
+import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
@@ -21,7 +23,8 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Ingredient.class);
                 configuration.addAnnotatedClass(Pizza.class);
                 configuration.addAnnotatedClass(PizzaOrder.class);
-                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder(getServiceRegistry())
+                        .applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
             } catch (Exception e) {
@@ -29,5 +32,10 @@ public class HibernateSessionFactoryUtil {
             }
         }
         return sessionFactory;
+    }
+
+    private static BootstrapServiceRegistry getServiceRegistry(){
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        return new BootstrapServiceRegistryBuilder().applyClassLoader(loader).build();
     }
 }

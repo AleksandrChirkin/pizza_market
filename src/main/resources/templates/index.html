@@ -1,13 +1,19 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title>Все пиццы</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<tr th:each="pizza : ${pizzas}">
-    <td><span th:text="${pizza.pizzaName}" ></span> </td>
-    <td><span th:text="${pizza.description}" ></span><br></td>
-</tr>
+<table th:border="1" style="width:300px">
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+    </tr>
+    <tr th:each="pizza : ${pizzas}">
+        <td th:text="${pizza.pizzaName}" ></td>
+        <td th:text="${pizza.description}"></td>
+    </tr>
+</table>
 </body>
 </html>

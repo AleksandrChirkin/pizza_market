@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Pizza, yahooo</title>
+    <title th:text="${pizza.pizzaName}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-
+<h1 th:text="${pizza.pizzaName}"></h1>
+<h2>Описание: </h2>
+<span th:text="${pizza.description}"></span>
 </body>
 </html>

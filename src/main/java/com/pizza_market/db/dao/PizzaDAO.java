@@ -32,10 +32,10 @@ public class PizzaDAO {
     }
 
     public List<Pizza> getAllPizza() {
-        return (List<Pizza>) HibernateSessionFactoryUtil
+        return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()
-                .createQuery("from Pizza")
+                .createQuery("from Pizza", Pizza.class)
                 .list();
     }
 

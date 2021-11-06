@@ -24,9 +24,9 @@ public class IndexPageController {
     }
 
     @GetMapping("/pizza")
-    public String pizza(@RequestParam(name="pizzaId", required=true) Long pizzaId, Model model) {
+    public String pizza(@RequestParam(name="pizzaId") Long pizzaId, Model model) {
         Pizza pizza = pizzaService.getPizzaById(pizzaId);
         model.addAttribute("pizza", pizza);
-        return "index";  // имя шаблона
+        return "pizza";  // имя шаблона
     }
 }
