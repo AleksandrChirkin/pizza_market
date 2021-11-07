@@ -14,22 +14,6 @@ import java.util.List;
 public class PizzaDAO {
     // пока экземпляр пиццы создаем так, но это нужно убрать, когда запилим админку
     // TODO: избавиться от Native SQL, поработать с сущностями
-    private PizzaDAO(){
-        if (getAllPizza().isEmpty()) {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            Query query1 = session.createSQLQuery(
-                    "insert into PIZZA (pizza_name) values ('Маргарита');"
-            );
-            query1.executeUpdate();
-            Query query2 = session.createSQLQuery(
-                    "insert into PIZZA (pizza_name, description) values ('Гавайская', 'Имеются ананасы')"
-            );
-            query2.executeUpdate();
-            tx1.commit();
-            session.close();
-        }
-    }
 
     public List<Pizza> getAllPizza() {
         return HibernateSessionFactoryUtil

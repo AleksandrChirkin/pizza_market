@@ -19,6 +19,11 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
+
+                configuration.setProperty("hibernate.connection.url", System.getenv("DATABASE_URL"));
+                configuration.setProperty("hibernate.connection.username", System.getenv("DATABASE_USER"));
+                configuration.setProperty("hibernate.connection.password", System.getenv("DATABASE_PASSWORD"));
+
                 configuration.addAnnotatedClass(Client.class);
                 configuration.addAnnotatedClass(Ingredient.class);
                 configuration.addAnnotatedClass(Pizza.class);
