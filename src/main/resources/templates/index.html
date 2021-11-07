@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Все пиццы</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<table th:border="1" style="width:300px">
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+    </tr>
+    <tr th:each="pizza : ${pizzas}">
+        <td th:text="${pizza.pizzaName}" ></td>
+        <td th:text="${pizza.description}"></td>
+    </tr>
+</table>
+</body>
+</html>
