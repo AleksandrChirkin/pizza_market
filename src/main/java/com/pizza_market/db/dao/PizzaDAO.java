@@ -2,11 +2,8 @@ package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.Pizza;
 import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Query;
 import java.util.List;
 
 // похорошему здесь нужно было написать интерфейс но мне лень

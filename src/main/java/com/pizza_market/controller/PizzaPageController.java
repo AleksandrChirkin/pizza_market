@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Controller
-public class IndexPageController {
+public class PizzaPageController {
     @Autowired
     private PizzaService pizzaService;
 
