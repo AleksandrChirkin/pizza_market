@@ -1,5 +1,6 @@
 package com.pizza_market.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,7 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                     .antMatchers("/", "/index", "/pizza", "/signup").permitAll()
-                    .antMatchers("/order").authenticated()
+                    .antMatchers("/order", "/user").authenticated()
+                    .antMatchers("/addPizza", "/admin", "/removePizza").hasAuthority("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

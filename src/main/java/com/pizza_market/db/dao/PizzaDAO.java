@@ -2,6 +2,9 @@ package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.Pizza;
 import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,7 +12,20 @@ import java.util.List;
 // похорошему здесь нужно было написать интерфейс но мне лень
 @Component
 public class PizzaDAO {
-    public List<Pizza> getAllPizza() {
+    @Autowired
+    private OrderDAO orderDAO;
+
+    public void addPizza(Pizza pizza) {
+        Session session = HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(pizza);
+        transaction.commit();
+        session.close();
+    }
+
+    public List<Pizza> getAllPizzas() {
         return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()
@@ -18,9 +34,22 @@ public class PizzaDAO {
     }
 
     public Pizza getPizzaById(Long id) {
-        return HibernateSessionFactoryUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
-                .openSession()
-                .get(Pizza.class, id);
+                .openSession();
+        Pizza pizza = session.get(Pizza.class, id);
+        session.close();
+        return pizza;
+    }
+
+    public void removePizzaById(Long id){
+        orderDAO.removeAllOrdersByPizzaId(id);
+        Session session = HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(getPizzaById(id));
+        transaction.commit();
+        session.close();
     }
 }

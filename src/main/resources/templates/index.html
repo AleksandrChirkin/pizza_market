@@ -16,13 +16,16 @@
     </form>
 </div>
 <div sec:authorize="isAuthenticated()">
-    <span sec:authentication="name"></span>
+    <a th:href="@{/user}">Войти в личный кабинет</a>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Выйти"/>
     </form>
 </div>
+<div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/admin}">Средства администрирования</a>
+</div>
 <div th:text="${message}"></div>
-<table th:border="1" style="width:300px">
+<table th:border="1" style="width:600px">
     <tr>
         <th>Название</th>
         <th>Описание</th>

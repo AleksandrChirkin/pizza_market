@@ -1,7 +1,6 @@
 package com.pizza_market.db.utils;
 
 import com.pizza_market.db.entities.Client;
-import com.pizza_market.db.entities.Ingredient;
 import com.pizza_market.db.entities.Pizza;
 import com.pizza_market.db.entities.PizzaOrder;
 import org.hibernate.SessionFactory;
@@ -25,7 +24,6 @@ public class HibernateSessionFactoryUtil {
                 configuration.setProperty("hibernate.connection.password", System.getenv("DATABASE_PASSWORD"));
 
                 configuration.addAnnotatedClass(Client.class);
-                configuration.addAnnotatedClass(Ingredient.class);
                 configuration.addAnnotatedClass(Pizza.class);
                 configuration.addAnnotatedClass(PizzaOrder.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder(getServiceRegistry())

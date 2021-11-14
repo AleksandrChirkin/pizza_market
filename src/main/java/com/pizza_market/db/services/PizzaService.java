@@ -27,7 +27,7 @@ public class PizzaService {
     private OrderDAO orderDAO;
 
     public List<Pizza> getAllPizza() {
-        return pizzaDAO.getAllPizza();
+        return pizzaDAO.getAllPizzas();
     }
 
     public Pizza getPizzaById(Long id) {
