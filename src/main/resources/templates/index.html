@@ -1,18 +1,43 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="ru">
 <head>
     <title>Все пиццы</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div sec:authorize="!isAuthenticated()">
+    <form th:action="@{/login}" method="get">
+        <input type="submit" value="Войти"/>
+    </form>
+    <form th:action="@{/signup}" method="get">
+        <input type="submit" value="Зарегистрироваться"/>
+    </form>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <span sec:authentication="name"></span>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Выйти"/>
+    </form>
+</div>
+<div th:text="${message}"></div>
 <table th:border="1" style="width:300px">
     <tr>
         <th>Название</th>
         <th>Описание</th>
+        <th></th>
+        <th></th>
     </tr>
     <tr th:each="pizza : ${pizzas}">
         <td th:text="${pizza.pizzaName}" ></td>
         <td th:text="${pizza.description}"></td>
+        <td>
+            <a th:href="@{/pizza(pizzaId=${pizza.id})}">Подробнее</a>
+        </td>
+        <td>
+            <a th:href="@{/order(pizzaId=${pizza.id})}">Заказать</a>
+        </td>
     </tr>
 </table>
 </body>

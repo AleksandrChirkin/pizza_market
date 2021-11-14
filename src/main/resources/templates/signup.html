@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Pizza market SignUp</title>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/signup}" method="post">
-    <div><label> First Name : <input type="text" name="first_name"/> </label></div>
-    <div><label> Second Name : <input type="text" name="second_name"/> </label></div>
-    <div><label> Telephone : <input type="text" name="tel"/> </label></div>
-    <div><label> Email : <input type="text" name="email"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+<div th:text="${message}"></div>
+<form th:action="@{/signup}" method="post" th:object="${client}">
+    <div><label> First Name : <input type="text" name="firstName" th:field="${client.firstName}"/> </label></div>
+    <div><label> Last Name : <input type="text" name="lastName" th:field="${client.lastName}"/> </label></div>
+    <div><label> Telephone : <input type="tel" name="tel" th:field="${client.tel}"/> </label></div>
+    <div><label> Email : <input type="email" name="email"/> </label></div>
+    <div><label> Password: <input type="password" th:field="${client.password}"/> </label></div>
+    <div><input type="submit" value="Зарегистрироваться"/></div>
+</form>
+<form th:action="@{/login}" method="get">
+    <input type="submit" value="Войти от имени другого пользователя"/>
+</form>
+<form th:action="@{/index}" method="post">
+    <input type="submit" value="На главную"/>
 </form>
 </body>
 </html>

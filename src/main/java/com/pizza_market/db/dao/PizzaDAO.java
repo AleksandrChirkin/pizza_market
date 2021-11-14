@@ -9,9 +9,6 @@ import java.util.List;
 // похорошему здесь нужно было написать интерфейс но мне лень
 @Component
 public class PizzaDAO {
-    // пока экземпляр пиццы создаем так, но это нужно убрать, когда запилим админку
-    // TODO: избавиться от Native SQL, поработать с сущностями
-
     public List<Pizza> getAllPizza() {
         return HibernateSessionFactoryUtil
                 .getSessionFactory()

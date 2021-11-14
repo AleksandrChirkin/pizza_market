@@ -1,38 +1,51 @@
 package com.pizza_market.controller;
 
-import org.hibernate.mapping.Collection;
+import com.pizza_market.db.dao.ClientDAO;
+import com.pizza_market.db.entities.Client;
+import com.pizza_market.db.entities.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.util.Collections;
+import java.util.Map;
 
 
 @Controller
 public class AuthPageController {
+    @Autowired
+    private ClientDAO clientDAO;
+
     @GetMapping("/login")
     public String loginPage(Model model) {
         return "login";  // имя шаблона
     }
 
-    @PostMapping("/login")
-    public String login(Model model) {
-        System.out.println(model);
-        return "";
+    @GetMapping("/signup")
+    public String signupPage(Model model) {
+        model.addAttribute("client", new Client());
+        return "signup";  // имя шаблона
     }
 
     @PostMapping("/signup")
-    public String addUser(User user, Map<String, Object> model) {
-        User userFromDb = UserDAO.findByEmail(user.getEmail());
-        if (userFromDb != null) {
+    public String addClient(Client client, Map<String, Object> model) {
+        String clientMail = client.getEmail();
+        if (clientMail == null)
+            return "signup";
+        Client clientFromDb = clientDAO.findByEmail(clientMail);
+        if (clientFromDb != null) {
             model.put("message", "User exists!");
             return "signup";
         }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton());
-        UserDAO.save(user);
+        client.setId((long) clientMail.hashCode());
+        client.setLastDate(new Date(Instant.now().toEpochMilli()));
+        client.setActive(true);
+        client.setRoles(Collections.singleton(Role.USER));
+        clientDAO.save(client);
 
         return "redirect:/login";
     }
