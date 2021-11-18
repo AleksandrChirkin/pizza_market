@@ -54,10 +54,8 @@ public class PizzaService {
         clientDAO.save(client);
     }
 
-    public List<PizzaOrder> getOrdersByUserId(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Client client = clientDAO.findByEmail(auth.getName());
-        return orderDAO.getOrdersByUserId(client.getId());
+    public List<PizzaOrder> getOrdersByUserId(Long id){
+        return orderDAO.getOrdersByUserId(id);
     }
 
     public void addPizza(Pizza pizza){

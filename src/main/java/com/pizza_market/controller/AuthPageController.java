@@ -61,11 +61,7 @@ public class AuthPageController {
 
     @GetMapping("/user")
     public String user(Model model) {
-        model.addAttribute("orders", service.getOrdersByUserId());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Client client = service.findClientByEmail(auth.getName());
-        model.addAttribute("userName", String.format("%s %s", client.getFirstName(), client.getLastName()));
-        return "user";  // имя шаблона
+        return getUser(model);  // имя шаблона
     }
 
     @GetMapping("/admin")
@@ -100,7 +96,14 @@ public class AuthPageController {
     @GetMapping("/removeOrder")
     public String removeOrder(@RequestParam(name="orderId") Long orderId, Model model){
         service.removeOrderById(orderId);
-        model.addAttribute("orders", service.getOrdersByUserId());
+        return getUser(model);
+    }
+
+    private String getUser(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = service.findClientByEmail(auth.getName());
+        model.addAttribute("userName", String.format("%s %s", client.getFirstName(), client.getLastName()));
+        model.addAttribute("orders", service.getOrdersByUserId(client.getId()));
         return "user";
     }
 }
