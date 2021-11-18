@@ -45,4 +45,30 @@ public class PizzaService {
         order.setLongitude(0.0f);
         orderDAO.addOrder(order);
     }
+
+    public Client findClientByEmail(String email){
+        return clientDAO.findByEmail(email);
+    }
+
+    public void saveClient(Client client){
+        clientDAO.save(client);
+    }
+
+    public List<PizzaOrder> getOrdersByUserId(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = clientDAO.findByEmail(auth.getName());
+        return orderDAO.getOrdersByUserId(client.getId());
+    }
+
+    public void addPizza(Pizza pizza){
+        pizzaDAO.addPizza(pizza);
+    }
+
+    public void removePizzaById(Long id){
+        pizzaDAO.removePizzaById(id);
+    }
+
+    public void removeOrderById(Long id){
+        orderDAO.removeOrderById(id);
+    }
 }

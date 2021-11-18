@@ -22,12 +22,33 @@ public class OrderDAO {
 
     public List<PizzaOrder> getAllOrders(){
         Session session = HibernateSessionFactoryUtil
-                .getSessionFactory().openSession();
+                .getSessionFactory()
+                .openSession();
         List<PizzaOrder> orders = session
                 .createQuery("from PizzaOrder", PizzaOrder.class)
                 .list();
         session.close();
         return orders;
+    }
+
+    public List<PizzaOrder> getOrdersByUserId(Long id){
+        return HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession()
+                .createNativeQuery(
+                        (String.format("SELECT * FROM PIZZA_ORDER p_order WHERE p_order.client_id = %d", id)), PizzaOrder.class)
+                .list();
+    }
+
+    public void removeOrderById(Long id){
+        Session session = HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession();
+        PizzaOrder orderToRemove = session.get(PizzaOrder.class, id);
+        Transaction transaction = session.beginTransaction();
+        session.delete(orderToRemove);
+        transaction.commit();
+        session.close();
     }
 
     public void removeAllOrdersByPizzaId(Long pizzaId){

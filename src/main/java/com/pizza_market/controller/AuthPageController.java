@@ -1,10 +1,12 @@
 package com.pizza_market.controller;
 
-import com.pizza_market.db.dao.*;
 import com.pizza_market.db.entities.Client;
 import com.pizza_market.db.entities.Pizza;
 import com.pizza_market.db.entities.Role;
+import com.pizza_market.db.services.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +22,7 @@ import java.util.Map;
 @Controller
 public class AuthPageController {
     @Autowired
-    private ClientDAO clientDAO;
-
-    @Autowired
-    private OrderDAO orderDAO;
-
-    @Autowired
-    private PizzaDAO pizzaDAO;
+    private PizzaService service;
 
     @GetMapping("/login")
     public String loginPage(Model model) {
@@ -46,7 +42,7 @@ public class AuthPageController {
             model.put("message", "No email written!");
             return "signup";
         }
-        Client clientFromDb = clientDAO.findByEmail(clientMail);
+        Client clientFromDb = service.findClientByEmail(clientMail);
         if (clientFromDb != null) {
             model.put("message", "User exists!");
             return "signup";
@@ -58,19 +54,23 @@ public class AuthPageController {
             client.setRoles(Collections.singleton(Role.ADMIN));
         else
             client.setRoles(Collections.singleton(Role.USER));
-        clientDAO.save(client);
+        service.saveClient(client);
         model.put("message", "Пользоавтель добавлен!");
         return "login";
     }
 
     @GetMapping("/user")
     public String user(Model model) {
+        model.addAttribute("orders", service.getOrdersByUserId());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = service.findClientByEmail(auth.getName());
+        model.addAttribute("userName", String.format("%s %s", client.getFirstName(), client.getLastName()));
         return "user";  // имя шаблона
     }
 
     @GetMapping("/admin")
     public String admin(Model model){
-        model.addAttribute("pizzas", pizzaDAO.getAllPizzas());
+        model.addAttribute("pizzas", service.getAllPizza());
         return "admin";
     }
 
@@ -82,18 +82,25 @@ public class AuthPageController {
 
     @PostMapping("/addPizza")
     public String addPizza(Pizza pizza, Map<String, Object> model){
-        pizzaDAO.addPizza(pizza);
+        service.addPizza(pizza);
         model.put("message", String.format("Пицца %s добавлена", pizza.getPizzaName()));
-        model.put("pizzas", pizzaDAO.getAllPizzas());
+        model.put("pizzas", service.getAllPizza());
         return "admin";
     }
 
     @GetMapping("/removePizza")
     public String removePizza(@RequestParam(name="pizzaId") Long pizzaId, Model model){
-        String pizzaName = pizzaDAO.getPizzaById(pizzaId).getPizzaName();
-        pizzaDAO.removePizzaById(pizzaId);
+        String pizzaName = service.getPizzaById(pizzaId).getPizzaName();
+        service.removePizzaById(pizzaId);
         model.addAttribute("message", String.format("Пицца %s успешно удалена!", pizzaName));
-        model.addAttribute("pizzas", pizzaDAO.getAllPizzas());
+        model.addAttribute("pizzas", service.getAllPizza());
         return "admin";
+    }
+
+    @GetMapping("/removeOrder")
+    public String removeOrder(@RequestParam(name="orderId") Long orderId, Model model){
+        service.removeOrderById(orderId);
+        model.addAttribute("orders", service.getOrdersByUserId());
+        return "user";
     }
 }

@@ -17,6 +17,7 @@
     </tr>
     <tr th:each="pizza : ${pizzas}">
         <td th:text="${pizza.pizzaName}" ></td>
+        <td th:text="${pizza.description}" ></td>
         <td>
             <a th:href="@{/removePizza(pizzaId=${pizza.id})}">Удалить</a>
         </td>

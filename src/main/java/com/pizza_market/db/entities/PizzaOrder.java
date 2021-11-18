@@ -25,6 +25,14 @@ public class PizzaOrder {
     @Column(name = "long", nullable = false)
     private Float longitude;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Date getDate() {
         return date;
     }
