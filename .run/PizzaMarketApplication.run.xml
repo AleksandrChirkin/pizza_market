@@ -4,11 +4,6 @@
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.pizza_market.PizzaMarketApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="SHORTEN_COMMAND_LINE" value="NONE" />
-    <envs>
-      <env name="DATABASE_URL" value="jdbc:postgresql://localhost:5432/PIZZA_DB" />
-      <env name="DATABASE_USER" value="mark" />
-      <env name="DATABASE_PASSWORD" value="2002" />
-    </envs>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

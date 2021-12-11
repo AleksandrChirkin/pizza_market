@@ -1,17 +1,21 @@
 package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.PizzaOrder;
-import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
+import com.pizza_market.db.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class OrderDAO {
+    @Autowired
+    private HibernateUtil hibernateUtil;
+
     public void addOrder(PizzaOrder order){
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();
@@ -21,7 +25,7 @@ public class OrderDAO {
     }
 
     public List<PizzaOrder> getAllOrders(){
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         List<PizzaOrder> orders = session
@@ -32,7 +36,7 @@ public class OrderDAO {
     }
 
     public List<PizzaOrder> getOrdersByUserId(Long id){
-        return HibernateSessionFactoryUtil
+        return hibernateUtil
                 .getSessionFactory()
                 .openSession()
                 .createNativeQuery(
@@ -41,7 +45,7 @@ public class OrderDAO {
     }
 
     public void removeOrderById(Long id){
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         PizzaOrder orderToRemove = session.get(PizzaOrder.class, id);
@@ -52,7 +56,7 @@ public class OrderDAO {
     }
 
     public void removeAllOrdersByPizzaId(Long pizzaId){
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         for (PizzaOrder order: getAllOrders()) {

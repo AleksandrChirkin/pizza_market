@@ -1,7 +1,7 @@
 package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.Pizza;
-import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
+import com.pizza_market.db.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,13 @@ import java.util.List;
 @Component
 public class PizzaDAO {
     @Autowired
+    private HibernateUtil hibernateUtil;
+
+    @Autowired
     private OrderDAO orderDAO;
 
     public void addPizza(Pizza pizza) {
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();
@@ -26,7 +29,7 @@ public class PizzaDAO {
     }
 
     public List<Pizza> getAllPizzas() {
-        return HibernateSessionFactoryUtil
+        return hibernateUtil
                 .getSessionFactory()
                 .openSession()
                 .createQuery("from Pizza", Pizza.class)
@@ -34,7 +37,7 @@ public class PizzaDAO {
     }
 
     public Pizza getPizzaById(Long id) {
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         Pizza pizza = session.get(Pizza.class, id);
@@ -44,7 +47,7 @@ public class PizzaDAO {
 
     public void removePizzaById(Long id){
         orderDAO.removeAllOrdersByPizzaId(id);
-        Session session = HibernateSessionFactoryUtil
+        Session session = hibernateUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();
