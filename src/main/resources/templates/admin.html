@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div th:text="${message}"></div>
+<h1 th:text="Пиццы"></h1>
+<form th:action="@{/addPizza}" method="get">
+    <input type="submit" value="Добавить"/>
+</form>
+<table th:border="1" style="width:600px">
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+    </tr>
+    <tr th:each="pizza : ${pizzas}">
+        <td th:text="${pizza.pizzaName}" ></td>
+        <td th:text="${pizza.description}" ></td>
+        <td>
+            <a th:href="@{/removePizza(pizzaId=${pizza.id})}">Удалить</a>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/}" method="get">
+    <input type="submit" value="На главную"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new Pizza</title>
+</head>
+<body>
+<form th:action="@{/addPizza}" method="post" th:object="${pizza}">
+    <div><label> Название : <input type="text" name="pizzaName" th:field="${pizza.pizzaName}"/> </label></div>
+    <div><label> Описание : <input type="text" name="description" th:field="${pizza.description}"/> </label></div>
+    <div><input type="submit" value="Добавить"/></div>
+</form>
+<form th:action="@{/admin}" method="get">
+    <input type="submit" value="Назад"/>
+</form>
+</body>
+</html>
