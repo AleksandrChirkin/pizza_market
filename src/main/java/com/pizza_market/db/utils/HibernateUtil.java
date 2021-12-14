@@ -21,15 +21,18 @@ public class HibernateUtil {
     private HibernateUtil() {
         try {
             Configuration configuration = new Configuration().configure();
+            configuration.setProperty("hibernate.connection.url", System.getenv("DATABASE_URL"));
+            configuration.setProperty("hibernate.connection.username", System.getenv("DATABASE_USER"));
+            configuration.setProperty("hibernate.connection.password", System.getenv("DATABASE_PASSWORD"));
             configuration.addAnnotatedClass(Client.class);
             configuration.addAnnotatedClass(Pizza.class);
             configuration.addAnnotatedClass(PizzaOrder.class);
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder(getServiceRegistry())
                     .applySettings(configuration.getProperties());
             sessionFactory = configuration.buildSessionFactory(builder.build());
-            source = new DriverManagerDataSource(configuration.getProperty("connection.url"),
-                    configuration.getProperty("connection.username"),
-                    configuration.getProperty("connection.password"));
+            source = new DriverManagerDataSource(System.getenv("DATABASE_URL"),
+                    System.getenv("DATABASE_USER"),
+                    System.getenv("DATABASE_PASSWORD"));
         } catch (Exception e) {
             System.out.println("Исключение!" + e);
         }
