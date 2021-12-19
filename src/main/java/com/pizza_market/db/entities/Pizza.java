@@ -15,6 +15,9 @@ public class Pizza {
     @Column
     private String description;
 
+    @Column
+    private Float price;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +40,13 @@ public class Pizza {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Float getPrice(){
+        return price;
+    }
+
+    public void setPrice(Float price){
+        this.price = price;
     }
 }

@@ -29,12 +29,14 @@
     <tr>
         <th>Название</th>
         <th>Описание</th>
+        <th>Цена</th>
         <th></th>
         <th></th>
     </tr>
     <tr th:each="pizza : ${pizzas}">
         <td th:text="${pizza.pizzaName}" ></td>
         <td th:text="${pizza.description}"></td>
+        <td th:text="${pizza.price}"></td>
         <td>
             <a th:href="@{/pizza(pizzaId=${pizza.id})}">Подробнее</a>
         </td>

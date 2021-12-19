@@ -13,12 +13,15 @@
         <th>Фамилия</th>
         <th>Почта</th>
         <th>Телефон</th>
+        <th>Последнее посещение</th>
         <th></th>
     </tr>
     <tr th:each="client : ${clients}">
         <td th:text="${client.firstName}" ></td>
         <td th:text="${client.lastName}"></td>
         <td th:text="${client.email}"></td>
+        <td th:text="${client.tel}"></td>
+        <td th:text="${client.lastDate}"></td>
         <td>
             <a th:href="@{/removeClient(clientId=${client.id})}">Удалить</a>
         </td>
@@ -37,6 +40,7 @@
     <tr th:each="pizza : ${pizzas}">
         <td th:text="${pizza.pizzaName}" ></td>
         <td th:text="${pizza.description}" ></td>
+        <td th:text="${pizza.price}" ></td>
         <td>
             <a th:href="@{/removePizza(pizzaId=${pizza.id})}">Удалить</a>
         </td>
