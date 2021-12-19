@@ -1,9 +1,7 @@
 package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.Client;
-import com.pizza_market.db.entities.Pizza;
-import com.pizza_market.db.entities.PizzaOrder;
-import com.pizza_market.db.utils.HibernateUtil;
+import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +9,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
 @Component
 public class ClientDAO {
-    @Autowired
-    private HibernateUtil hibernateUtil;
-
     @Autowired
     private OrderDAO orderDAO;
 
     public List<Client> getAllClients(){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         List<Client> orders = session
@@ -32,7 +26,7 @@ public class ClientDAO {
     }
 
     public Client getClientById(Long id){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         Client client = session.get(Client.class, id);
@@ -41,13 +35,15 @@ public class ClientDAO {
     }
 
     public Client getClientByEmail(String email) {
-        return hibernateUtil
+        return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession().get(Client.class, (long) email.hashCode());
     }
 
     public void save(Client client){
-        Session session = hibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession();
         Transaction transaction = session.beginTransaction();
         session.save(client);
         transaction.commit();
@@ -56,7 +52,7 @@ public class ClientDAO {
 
     public void removeClient(Long id){
         orderDAO.removeAllOrdersByClientId(id);
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();

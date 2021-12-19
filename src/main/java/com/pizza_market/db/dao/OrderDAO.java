@@ -1,21 +1,17 @@
 package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.PizzaOrder;
-import com.pizza_market.db.utils.HibernateUtil;
+import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class OrderDAO {
-    @Autowired
-    private HibernateUtil hibernateUtil;
-
     public void addOrder(PizzaOrder order){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();
@@ -25,7 +21,7 @@ public class OrderDAO {
     }
 
     public List<PizzaOrder> getAllOrders(){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         List<PizzaOrder> orders = session
@@ -36,7 +32,7 @@ public class OrderDAO {
     }
 
     public List<PizzaOrder> getOrdersByUserId(Long id){
-        return hibernateUtil
+        return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()
                 .createNativeQuery(
@@ -45,7 +41,7 @@ public class OrderDAO {
     }
 
     public void removeOrderById(Long id){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         PizzaOrder orderToRemove = session.get(PizzaOrder.class, id);
@@ -56,7 +52,7 @@ public class OrderDAO {
     }
 
     public void removeAllOrdersByPizzaId(Long pizzaId){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         for (PizzaOrder order: getAllOrders()) {
@@ -70,7 +66,7 @@ public class OrderDAO {
     }
 
     public void removeAllOrdersByClientId(Long clientId){
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         for (PizzaOrder order: getAllOrders()) {

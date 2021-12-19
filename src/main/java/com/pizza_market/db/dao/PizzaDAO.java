@@ -1,7 +1,7 @@
 package com.pizza_market.db.dao;
 
 import com.pizza_market.db.entities.Pizza;
-import com.pizza_market.db.utils.HibernateUtil;
+import com.pizza_market.db.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +9,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-// похорошему здесь нужно было написать интерфейс но мне лень
 @Component
 public class PizzaDAO {
-    @Autowired
-    private HibernateUtil hibernateUtil;
-
     @Autowired
     private OrderDAO orderDAO;
 
     public void addPizza(Pizza pizza) {
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();
@@ -29,7 +25,7 @@ public class PizzaDAO {
     }
 
     public List<Pizza> getAllPizzas() {
-        return hibernateUtil
+        return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()
                 .createQuery("from Pizza", Pizza.class)
@@ -37,7 +33,7 @@ public class PizzaDAO {
     }
 
     public Pizza getPizzaById(Long id) {
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         Pizza pizza = session.get(Pizza.class, id);
@@ -47,7 +43,7 @@ public class PizzaDAO {
 
     public void removePizzaById(Long id){
         orderDAO.removeAllOrdersByPizzaId(id);
-        Session session = hibernateUtil
+        Session session = HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession();
         Transaction transaction = session.beginTransaction();
