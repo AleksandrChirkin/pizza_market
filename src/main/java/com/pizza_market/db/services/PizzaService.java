@@ -26,36 +26,12 @@ public class PizzaService {
     @Autowired
     private OrderDAO orderDAO;
 
-    public List<Pizza> getAllPizza() {
+    public List<Pizza> getAllPizzas() {
         return pizzaDAO.getAllPizzas();
     }
 
     public Pizza getPizzaById(Long id) {
         return pizzaDAO.getPizzaById(id);
-    }
-
-    public void addOrder(Pizza pizza){
-        PizzaOrder order = new PizzaOrder();
-        order.setDate(new Date(Instant.now().toEpochMilli()));
-        order.setPizza(pizza);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Client client = clientDAO.findByEmail(auth.getName());
-        order.setClient(client);
-        order.setLatitude(0.0f);
-        order.setLongitude(0.0f);
-        orderDAO.addOrder(order);
-    }
-
-    public Client findClientByEmail(String email){
-        return clientDAO.findByEmail(email);
-    }
-
-    public void saveClient(Client client){
-        clientDAO.save(client);
-    }
-
-    public List<PizzaOrder> getOrdersByUserId(Long id){
-        return orderDAO.getOrdersByUserId(id);
     }
 
     public void addPizza(Pizza pizza){
@@ -66,7 +42,47 @@ public class PizzaService {
         pizzaDAO.removePizzaById(id);
     }
 
+    public List<PizzaOrder> getAllOrders(){
+        return orderDAO.getAllOrders();
+    }
+
+    public List<PizzaOrder> getOrdersByUserId(Long id){
+        return orderDAO.getOrdersByUserId(id);
+    }
+
+    public void addOrder(Pizza pizza){
+        PizzaOrder order = new PizzaOrder();
+        order.setDate(new Date(Instant.now().toEpochMilli()));
+        order.setPizza(pizza);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = clientDAO.getClientByEmail(auth.getName());
+        order.setClient(client);
+        order.setLatitude(0.0f);
+        order.setLongitude(0.0f);
+        orderDAO.addOrder(order);
+    }
+
     public void removeOrderById(Long id){
         orderDAO.removeOrderById(id);
+    }
+
+    public List<Client> getAllClients(){
+        return clientDAO.getAllClients();
+    }
+
+    public Client getClientByEmail(String email){
+        return clientDAO.getClientByEmail(email);
+    }
+
+    public Client getClientById(Long id){
+        return clientDAO.getClientById(id);
+    }
+
+    public void saveClient(Client client){
+        clientDAO.save(client);
+    }
+
+    public void removeClientById(Long id){
+        clientDAO.removeClient(id);
     }
 }

@@ -6,6 +6,24 @@
 </head>
 <body>
 <div th:text="${message}"></div>
+<h1 th:text="Пользователи"></h1>
+<table th:border="1" style="width:600px">
+    <tr>
+        <th>Имя/th>
+        <th>Фамилия</th>
+        <th>Почта</th>
+        <th>Телефон</th>
+        <th></th>
+    </tr>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.firstName}" ></td>
+        <td th:text="${client.lastName}"></td>
+        <td th:text="${client.email}"></td>
+        <td>
+            <a th:href="@{/removeClient(clientId=${client.id})}">Удалить</a>
+        </td>
+    </tr>
+</table>
 <h1 th:text="Пиццы"></h1>
 <form th:action="@{/addPizza}" method="get">
     <input type="submit" value="Добавить"/>
@@ -14,12 +32,30 @@
     <tr>
         <th>Название</th>
         <th>Описание</th>
+        <th></th>
     </tr>
     <tr th:each="pizza : ${pizzas}">
         <td th:text="${pizza.pizzaName}" ></td>
         <td th:text="${pizza.description}" ></td>
         <td>
             <a th:href="@{/removePizza(pizzaId=${pizza.id})}">Удалить</a>
+        </td>
+    </tr>
+</table>
+<h1 th:text="Заказы"></h1>
+<table th:border="1" style="width:600px">
+    <tr>
+        <th>Пицца</th>
+        <th>Пользователь</th>
+        <th>Дата</th>
+        <th></th>
+    </tr>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.pizza.pizzaName}" ></td>
+        <td th:text="${order.client.firstName} ${order.client.lastName}"></td>
+        <td th:text="${order.date}"></td>
+        <td>
+            <a th:href="@{/deletePizza(orderId=${order.id})}">Удалить</a>
         </td>
     </tr>
 </table>

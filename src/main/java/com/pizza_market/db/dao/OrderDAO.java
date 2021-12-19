@@ -68,4 +68,18 @@ public class OrderDAO {
         }
         session.close();
     }
+
+    public void removeAllOrdersByClientId(Long clientId){
+        Session session = hibernateUtil
+                .getSessionFactory()
+                .openSession();
+        for (PizzaOrder order: getAllOrders()) {
+            if (order.getClient().getId().equals(clientId)) {
+                Transaction transaction = session.beginTransaction();
+                session.delete(order);
+                transaction.commit();
+            }
+        }
+        session.close();
+    }
 }

@@ -18,7 +18,7 @@ public class PizzaPageController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Pizza> pizzas = pizzaService.getAllPizza();
+        List<Pizza> pizzas = pizzaService.getAllPizzas();
         model.addAttribute("pizzas", pizzas);
         return "index";  // имя шаблона
     }
@@ -36,7 +36,7 @@ public class PizzaPageController {
         pizzaService.addOrder(pizza);
         String response = String.format("Пицца \"%s\" заказана!", pizza.getPizzaName());
         model.addAttribute("message", response);
-        List<Pizza> pizzas = pizzaService.getAllPizza();
+        List<Pizza> pizzas = pizzaService.getAllPizzas();
         model.addAttribute("pizzas", pizzas);
         return "index";
     }

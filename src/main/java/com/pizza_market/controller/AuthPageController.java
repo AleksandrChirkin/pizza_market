@@ -42,7 +42,7 @@ public class AuthPageController {
             model.put("message", "No email written!");
             return "signup";
         }
-        Client clientFromDb = service.findClientByEmail(clientMail);
+        Client clientFromDb = service.getClientByEmail(clientMail);
         if (clientFromDb != null) {
             model.put("message", "User exists!");
             return "signup";
@@ -61,12 +61,18 @@ public class AuthPageController {
 
     @GetMapping("/user")
     public String user(Model model) {
-        return getUser(model);  // имя шаблона
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = service.getClientByEmail(auth.getName());
+        model.addAttribute("userName", String.format("%s %s", client.getFirstName(), client.getLastName()));
+        model.addAttribute("orders", service.getOrdersByUserId(client.getId()));
+        return "user";
     }
 
     @GetMapping("/admin")
     public String admin(Model model){
-        model.addAttribute("pizzas", service.getAllPizza());
+        model.addAttribute("clients", service.getAllClients());
+        model.addAttribute("orders", service.getAllOrders());
+        model.addAttribute("pizzas", service.getAllPizzas());
         return "admin";
     }
 
@@ -80,8 +86,20 @@ public class AuthPageController {
     public String addPizza(Pizza pizza, Map<String, Object> model){
         service.addPizza(pizza);
         model.put("message", String.format("Пицца %s добавлена", pizza.getPizzaName()));
-        model.put("pizzas", service.getAllPizza());
+        model.put("clients", service.getAllClients());
+        model.put("orders", service.getAllOrders());
+        model.put("pizzas", service.getAllPizzas());
         return "admin";
+    }
+
+    @GetMapping("/removeClient")
+    public String removeClient(@RequestParam(name="clientId") Long clientId, Model model){
+        Client clientToRemove = service.getClientById(clientId);
+        service.removeClientById(clientId);
+        model.addAttribute("message", String.format("Пользователь %s %s успешно удален!",
+                clientToRemove.getFirstName(),
+                clientToRemove.getLastName()));
+        return admin(model);
     }
 
     @GetMapping("/removePizza")
@@ -89,21 +107,19 @@ public class AuthPageController {
         String pizzaName = service.getPizzaById(pizzaId).getPizzaName();
         service.removePizzaById(pizzaId);
         model.addAttribute("message", String.format("Пицца %s успешно удалена!", pizzaName));
-        model.addAttribute("pizzas", service.getAllPizza());
-        return "admin";
+        return admin(model);
+    }
+
+    @GetMapping("/deleteOrder")
+    public String deleteOrder(@RequestParam(name="orderId") Long orderId, Model model){
+        service.removeOrderById(orderId);
+        model.addAttribute("message", "Заказ успешно удален!");
+        return admin(model);
     }
 
     @GetMapping("/removeOrder")
     public String removeOrder(@RequestParam(name="orderId") Long orderId, Model model){
         service.removeOrderById(orderId);
-        return getUser(model);
-    }
-
-    private String getUser(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Client client = service.findClientByEmail(auth.getName());
-        model.addAttribute("userName", String.format("%s %s", client.getFirstName(), client.getLastName()));
-        model.addAttribute("orders", service.getOrdersByUserId(client.getId()));
-        return "user";
+        return user(model);
     }
 }
