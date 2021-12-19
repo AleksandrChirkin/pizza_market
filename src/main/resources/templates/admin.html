@@ -60,7 +60,7 @@
         <td th:text="${order.client.email}"></td>
         <td th:text="${order.date}"></td>
         <td>
-            <a th:href="@{/deletePizza(orderId=${order.id})}">Удалить</a>
+            <a th:href="@{/deleteOrder(orderId=${order.id})}">Удалить</a>
         </td>
     </tr>
 </table>
