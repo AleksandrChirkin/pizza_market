@@ -9,7 +9,7 @@
 <h1 th:text="Пользователи"></h1>
 <table th:border="1" style="width:600px">
     <tr>
-        <th>Имя/th>
+        <th>Имя</th>
         <th>Фамилия</th>
         <th>Почта</th>
         <th>Телефон</th>
@@ -46,13 +46,13 @@
 <table th:border="1" style="width:600px">
     <tr>
         <th>Пицца</th>
-        <th>Пользователь</th>
+        <th>Пользователь (почта)</th>
         <th>Дата</th>
         <th></th>
     </tr>
     <tr th:each="order : ${orders}">
         <td th:text="${order.pizza.pizzaName}" ></td>
-        <td th:text="${order.client.firstName} ${order.client.lastName}"></td>
+        <td th:text="${order.client.email}"></td>
         <td th:text="${order.date}"></td>
         <td>
             <a th:href="@{/deletePizza(orderId=${order.id})}">Удалить</a>
