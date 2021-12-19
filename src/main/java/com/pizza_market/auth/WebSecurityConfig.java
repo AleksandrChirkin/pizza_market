@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final DataSource source;
 
-    private WebSecurityConfig(){
+    public WebSecurityConfig(){
         source = new DriverManagerDataSource(System.getenv("SPRING_DATASOURCE_URL"),
                 System.getenv("SPRING_DATASOURCE_USERNAME"),
                 System.getenv("SPRING_DATASOURCE_PASSWORD"));
