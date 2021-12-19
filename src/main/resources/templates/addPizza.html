@@ -8,7 +8,7 @@
 <form th:action="@{/addPizza}" method="post" th:object="${pizza}">
     <div><label> Название : <input type="text" name="pizzaName" th:field="${pizza.pizzaName}"/> </label></div>
     <div><label> Описание : <input type="text" name="description" th:field="${pizza.description}"/> </label></div>
-    <div><label> Описание : <input type="number" name="price" th:field="${pizza.price}"/> </label></div>
+    <div><label> Цена : <input type="number" name="price" th:field="${pizza.price}"/> </label></div>
     <div><input type="submit" value="Добавить"/></div>
 </form>
 <form th:action="@{/admin}" method="get">
