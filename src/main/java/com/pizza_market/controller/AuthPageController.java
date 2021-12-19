@@ -39,12 +39,12 @@ public class AuthPageController {
     public String addClient(Client client, Map<String, Object> model) {
         String clientMail = client.getEmail();
         if (clientMail == null) {
-            model.put("message", "No email written!");
+            model.put("message", "Почта не введена!");
             return "signup";
         }
         Client clientFromDb = service.getClientByEmail(clientMail);
         if (clientFromDb != null) {
-            model.put("message", "User exists!");
+            model.put("message", "Пользователь с такой почтой уже существует!");
             return "signup";
         }
         client.setId((long) clientMail.hashCode());
@@ -55,7 +55,7 @@ public class AuthPageController {
         else
             client.setRoles(Collections.singleton(Role.USER));
         service.saveClient(client);
-        model.put("message", "Пользоавтель добавлен!");
+        model.put("message", "Пользователь добавлен!");
         return "login";
     }
 

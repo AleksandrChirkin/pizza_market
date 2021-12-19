@@ -34,7 +34,7 @@ public class HibernateUtil {
                     System.getenv("SPRING_DATASOURCE_USERNAME"),
                     System.getenv("SPRING_DATASOURCE_PASSWORD"));
         } catch (Exception e) {
-            System.out.println("Исключение!" + e);
+            throw new RuntimeException(e);
         }
     }
 

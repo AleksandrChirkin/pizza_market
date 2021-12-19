@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Pizza market title</title>
+    <title>Вход</title>
 </head>
 <body>
 <div th:if="${param.error}">
-    Invalid username and password.
+    Неправильные имя пользователя и пароль
 </div>
 <div th:if="${param.logout}">
-    You have been logged out.
+    Вы вышли.
 </div>
 <form th:action="@{/login}" method="post">
-    <div><label> Username : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><label> Имя пользователя : <input type="text" name="username"/> </label></div>
+    <div><label> Пароль: <input type="password" name="password"/> </label></div>
     <div><input type="submit" value="Войти"/></div>
 </form>
 <form th:action="@{/signup}" method="get">

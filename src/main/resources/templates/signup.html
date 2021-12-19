@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Pizza market SignUp</title>
+    <title>Регистрация</title>
 </head>
 <body>
 <div th:text="${message}"></div>
 <form th:action="@{/signup}" method="post" th:object="${client}">
-    <div><label> First Name : <input type="text" name="firstName" th:field="${client.firstName}"/> </label></div>
-    <div><label> Last Name : <input type="text" name="lastName" th:field="${client.lastName}"/> </label></div>
-    <div><label> Telephone : <input type="tel" name="tel" th:field="${client.tel}"/> </label></div>
-    <div><label> Email : <input type="email" name="email"/> </label></div>
-    <div><label> Password: <input type="password" th:field="${client.password}"/> </label></div>
+    <div><label> Имя : <input type="text" name="firstName" th:field="${client.firstName}"/> </label></div>
+    <div><label> Фамилия : <input type="text" name="lastName" th:field="${client.lastName}"/> </label></div>
+    <div><label> Телефон : <input type="tel" name="tel" th:field="${client.tel}"/> </label></div>
+    <div><label> Почта : <input type="email" name="email"/> </label></div>
+    <div><label> Пароль: <input type="password" th:field="${client.password}"/> </label></div>
     <div><input type="submit" value="Зарегистрироваться"/></div>
 </form>
 <form th:action="@{/login}" method="get">
