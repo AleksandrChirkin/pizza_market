@@ -23,6 +23,8 @@
 <h1 th:text="${pizza.pizzaName}"></h1>
 <h2>Описание: </h2>
 <span th:text="${pizza.description}"></span>
+<h2>Цена: </h2>
+<span th:text="${pizza.description}"></span>
 <a th:href="@{/order(pizzaId=${pizza.id})}">Заказать</a>
 </body>
 </html>

@@ -19,12 +19,6 @@ public class PizzaOrder {
     @ManyToOne
     private Pizza pizza;
 
-    @Column(name = "lat", nullable = false)
-    private Float latitude;
-
-    @Column(name = "long", nullable = false)
-    private Float longitude;
-
     public Long getId() {
         return id;
     }
@@ -55,21 +49,5 @@ public class PizzaOrder {
 
     public void setPizza(Pizza pizza) {
         this.pizza = pizza;
-    }
-
-    public Float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
-
-    public Float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
     }
 }

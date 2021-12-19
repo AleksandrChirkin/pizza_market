@@ -57,8 +57,6 @@ public class PizzaService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientDAO.getClientByEmail(auth.getName());
         order.setClient(client);
-        order.setLatitude(0.0f);
-        order.setLongitude(0.0f);
         orderDAO.addOrder(order);
     }
 
